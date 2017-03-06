@@ -1,21 +1,19 @@
+// sample usage:
+//     <svg class="nav-header-icon" v-svg="{symbol:'icon-electron'}"></svg>
 export default {
   install(Vue, opts = {}) {
 
     const dir = {
-      params: ['symbol', 'size'],
-      bind() {
+      bind: function bind(el, binding, vnode) {
 
         // Get options
         opts.class = opts.class || 'icon';
         opts.url = opts.url || '/assets/svg/sprite.svg';
 
         // Get params
-        // If expression + "symbol" param -> use expression
-        let id = this.expression || this.params.symbol;
-        let size = this.params.size;
+        let id = binding.value ? binding.value.symbol : binding.expression;
+        let size = binding.value ? binding.value.size : null;
 
-        // Get element
-        let el = this.el;
         // Set viewBox, widht, height attributes ?
         if (size) {
           // Normalize valid separators: / /, /,/
